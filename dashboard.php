@@ -38,7 +38,7 @@ require("connect.php");
                     }
                     ?>
                 <div class="profileText">
-                    <p class="text maintext">John Doe</p>
+                    <!-- <p class="text maintext">John Doe</p> -->
                 </div>
             </div>
             <div class="arrow">
