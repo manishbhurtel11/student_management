@@ -25,15 +25,28 @@ require("connect.php");
     <div class="mainbody">
         <div class="close slider ">
             <div class="profile">
-                                        <?php
-                    if (isset($_POST["imagesubmit"])) {
-                        $filename = $_FILES['uploadfile']['name'];
-                        $tempname = $_FILES['uploadfile']['tmp_name'];
-                        $folder = "images/" . $filename;
-                        // echo $folder;
-                        move_uploaded_file($tempname, $folder);
-                        echo "<img src = '$folder'  class='image'>";
+                <?php
+                     if (isset($_POST["imagesubmit"])) {
+                         $filename = $_FILES['uploadfile']['name'];
+                         $tempname = $_FILES['uploadfile']['tmp_name'];
+                         $folder = "images/" . $filename;
+                         // echo $folder;
+                         move_uploaded_file($tempname, $folder);
+                        //  echo "<img src = '$folder'  class='image'>";
+                         $upload = mysqli_query($conn, "INSERT INTO image_details (user_image) VALUES ('$folder')");
+                         if ($upload) {
+                             echo "<script>alert('Image Uploaded Successfully!!!')</script>";
+                            }
+                        }
+                ?>
+                <?php
+                $imageArr = mysqli_query($conn, "SELECT * FROM image_details");
+                if(mysqli_num_rows($imageArr) > 0){
+                    $image = mysqli_fetch_assoc($imageArr)['user_image'];
+                    if($image){
+                        echo "<img src = '$image'  class='image'>";
                     }
+                }
                     ?>
                 <div class="profileText">
                     <p class="text maintext">John Doe</p>
@@ -71,12 +84,12 @@ require("connect.php");
                         <p class="text">Teachers</p>
                     </div>
                 </a>
-                <a href="school.php" class="anchor5 anchortag">
+                <!-- <a href="school.php" class="anchor5 anchortag">
                     <div class="coins childs">
                         <i class="fa-sharp fa-solid fa-school icons"></i>
                         <p class="text">School</p>
                     </div>
-                </a>
+                </a> -->
                 <hr>
                 <a href="login.php">
                     <div class="logout childs">
@@ -86,9 +99,6 @@ require("connect.php");
                 </a>
             </div>
         </div>
-
-
-
         <div class="dashboard_contents ">
             <div class="text_content">
                 <p class="textC">Admin Profile</p>
@@ -97,31 +107,30 @@ require("connect.php");
                 <div class="firstsection">
                     <div class="profileimage_container">
                         <?php
-                    if (isset($_POST["imagesubmit"])) {
-                        $filename = $_FILES['uploadfile']['name'];
-                        $tempname = $_FILES['uploadfile']['tmp_name'];
-                        $folder = "images/" . $filename;
-                        // echo $folder;
-                        move_uploaded_file($tempname, $folder);
-                        echo "<img src = '$folder'  class='profileimage'>";
-                    }
-                    ?>
+                        if(mysqli_num_rows($imageArr)){
+                            echo "<img src = '$image'  class='profileimage'>";
+                        }
+                        ?>
                         <!-- <img src="images/profile.jpeg" class="profileimage"> -->
                     </div>
+                    <?php 
+                    if(!isset($image)){
+                        ?>
                     <form action="admin.php" enctype="multipart/form-data" class="alter" method="POST">
                         <!-- <div class="alter"> -->
                         <input type="file" name="uploadfile" class="file">
                         <input type="submit" name="imagesubmit" value="Upload Image" class="update">
-                        <a href="editadmin.php"> <button class="update">Update Profile</button></a>
+                        <!-- <a href="editadmin.php"> <button class="update">Update Profile</button></a> -->
                         <!-- </div> -->
                     </form>
+                        <?php
+                    }
+                    ?>
                 </div>
                 <div class="secondsection">
                     <div class="headerportion">
                         <p class="adminname  same">Username: </p>
                         <p class="adminemail same">E-Mail: </p>
-                        <p class="adminnumber same">Number:</p>
-                        <p class="country same">Address:</p>
                     </div>
 
                     <?php
@@ -132,13 +141,14 @@ require("connect.php");
                     <div class="contentportion">
                         <p class="adminname  same"><?php echo $row['name'] ?></p>
                         <p class="adminemail same"><?php echo $row['email'] ?></p>
-                        <p class="adminnumber same"><?php echo $row['number'] ?></p>
-                        <p class="country same"><?php echo $row['address'] ?></p>
+
                     </div>
                     <?php
                     }
                     ?>
+                    
                 </div>
+                <!-- <a href="editadmin.php"> <button class="update">Update Profile</button></a> -->
             </div>
         </div>
     </div>

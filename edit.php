@@ -1,3 +1,7 @@
+<?php
+session_start();
+require("connect.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,50 +73,66 @@
             </div>
         </div>
 
-
-
+        <?php 
+            if($_GET){
+                $id = $_GET['id'];
+                $res = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM student_details WHERE id = $id"));
+                if(!$res){
+                  header("location./students.php");
+                }
+                ?>
         <div class="dashboard_contents dashboard_2">
             <div class="text_content">
                 <p class="textC">Students</p>
             </div>
             <div class="main main2">
-                <form action="edit.php" class="detailsform">
+                <form action="edit.php" class="detailsform" method="POST">
                     <p class="dheader"> Edit the Students Details</p>
-                    <div class="id_section">
-                        <label for="name" class="labels">Id</label>
-                        <input type="text" name="id" class="id">
-                    </div>
                     <div class="username_section">
                         <label for="name" class="labels">Name</label>
-                        <input type="text" name="name" class="name">
+                        <input type="text" name="name" class="name" value="<?php echo $res['name']; ?>">
                     </div>
                     <div class="email_section">
                         <label for="email" class="labels">E-Mail</label>
-                        <input type="email" name="email" class="email">
+                        <input type="email" name="email" class="email" value="<?php echo $res['email']; ?>">
                     </div>
                     <div class="phone_section">
                         <label for="number" class="labels">Number</label>
-                        <input type="number" name="number" class="number">
+                        <input type="number" name="number" class="number" value="<?php echo $res['number']; ?>">
                     </div>
                     <div class="address_section">
                         <label for="address" class="labels">Address</label>
-                        <input type="text" name="address" class="address">
+                        <input type="text" name="address" class="address" value="<?php echo $res['address']; ?>">
                     </div>
                     <div class="class_section">
                         <label for="class" class="labels">Class</label>
-                        <input type="text" name="class" class="class">
+                        <input type="text" name="class" class="class" value="<?php echo $res['class']; ?>">
                     </div>
                     <div class="roll_section">
                         <label for="roll" class="labels">Roll No</label>
-                        <input type="text" name="roll" class="roll">
+                        <input type="text" name="roll" class="roll" value="<?php echo $res['roll']; ?>">
                     </div>
+                    <input type="hidden" name="id"  value="<?php echo $id; ?>">
                     <div class="submits">
-                        <input type="submit" value="Submit" class="submitbtn">
+                    <input type="submit" value="Submit" class="submitbtn">
                     </div>
                 </form>
+                <?php
+            }
+                    if($_POST){
+                    $name = $_POST['name'];
+                    $email = $_POST['email'];
+                    $number = $_POST['number'];
+                    $address = $_POST['address'];
+                    $class = $_POST['class'];
+                    $roll = $_POST['roll'];
+                    $id = $_POST['id'];
+                    $submit = mysqli_query($conn, "UPDATE student_details SET name='$name', email = '$email', number= '$number', address = '$address', class='$class', roll='$roll' WHERE id='$id'");
+                    header("location: ./students.php");
+                    }
+                ?>
             </div>
         </div>
     </div>
 </body>
-
 </html>

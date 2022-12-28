@@ -1,3 +1,7 @@
+<?php
+session_start();
+require("connect.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,43 +74,59 @@
         </div>
 
 
-
+        <?php
+        if ($_GET) {
+            $id = $_GET['id'];
+            $res = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM teacher_details WHERE id = $id"));
+            if (!$res) {
+                header("location: ./teachers.php");
+            }
+        ?>
         <div class="dashboard_contents ">
             <div class="text_content">
                 <p class="textC">Teachers</p>
             </div>
             <div class="main main2" id="oops">
-                
-                <form action="editteachers.php" class="detailsform">
-                <p class="dheader"> Edit the Teachers Details</p> 
-                    <div class="id_section">
-                        <label for="name" class="labels">Id</label>
-                        <input type="text" name="id" class="id">
-                    </div>
+                <form action="editteachers.php" class="detailsform" method="post">
+                    <p class="dheader"> Edit the Teachers Details</p>
                     <div class="username_section">
                         <label for="name" class="labels">Name</label>
-                        <input type="text" name="name" class="name">
+                        <input type="text" name="name" class="name" value="<?php echo $res['name']; ?>">
                     </div>
                     <div class="email_section">
                         <label for="email" class="labels">E-Mail</label>
-                        <input type="email" name="email" class="email">
+                        <input type="email" name="email" class="email" value="<?php echo $res['email']; ?>">
                     </div>
                     <div class="phone_section">
                         <label for="number" class="labels">Number</label>
-                        <input type="number" name="number" class="number">
+                        <input type="number" name="number" class="number" value="<?php echo $res['number']; ?>">
                     </div>
                     <div class="address_section">
                         <label for="address" class="labels">Address</label>
-                        <input type="text" name="address" class="address">
+                        <input type="text" name="address" class="address" value="<?php echo $res['address']; ?>">
                     </div>
                     <div class="email_section">
                         <label for="email" class="labels">Class</label>
-                        <input type="email" name="email" class="email">
+                        <input type="text" name="class" class="email" value="<?php echo $res['class']; ?>">
                     </div>
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div class="submits">
-                    <input type="submit" value="Submit" class="submitbtn">
+                        <input type="submit" value="Submit" class="submitbtn">
                     </div>
                 </form>
+                <?php
+        }
+            if ($_POST) {
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $number = $_POST['number'];
+                $address = $_POST['address'];
+                $class = $_POST['class'];
+                $id = $_POST['id'];
+                $submit = mysqli_query($conn, "UPDATE teacher_details SET name='$name', email = '$email', number = '$number', address = '$address', class='$class' WHERE id='$id'");
+                header("location: ./teachers.php");
+            }
+                ?>
             </div>
         </div>
     </div>

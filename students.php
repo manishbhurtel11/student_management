@@ -25,7 +25,15 @@ require("connect.php");
     <div class="mainbody">
         <div class="close slider ">
             <div class="profile">
-                <img src="images/profile.jpeg" alt="profileImage" class="image">
+            <?php
+                $imageArr = mysqli_query($conn, "SELECT * FROM image_details");
+                if(mysqli_num_rows($imageArr) > 0){
+                    $image = mysqli_fetch_assoc($imageArr)['user_image'];
+                    if($image){
+                        echo "<img src = '$image'  class='image'>";
+                    }
+                }
+                    ?>
                 <div class="profileText">
                     <p class="text maintext">John Doe</p>
                 </div>
@@ -62,12 +70,12 @@ require("connect.php");
                         <p class="text">Teachers</p>
                     </div>
                 </a>
-                <a href="school.php" class="anchor5 anchortag">
+                <!-- <a href="school.php" class="anchor5 anchortag">
                     <div class="coins childs">
                         <i class="fa-sharp fa-solid fa-school icons"></i>
                         <p class="text">School</p>
                     </div>
-                </a>
+                </a> -->
                 <hr>
                 <a href="login.php">
                     <div class="logout childs">
@@ -114,7 +122,7 @@ require("connect.php");
                         <td><?php echo $row['address']?></td>
                         <td><?php echo $row['class']?></td>
                         <td><?php echo $row['roll']?></td>
-                        <td class="alteration"><a href="edit.php"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td class="alteration"><a href="<?php echo './edit.php?id='.$row['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
                         <td class="alteration"><?php echo "<a href='functions/delete.php?id=".$row['id']."'>"; ?><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
                     <?php

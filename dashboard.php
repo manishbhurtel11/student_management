@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['name'])){
+if (!isset($_SESSION['name'])) {
     header("location: http://localhost/management/login.php");
 }
 require("connect.php");
@@ -24,19 +24,22 @@ require("connect.php");
     <div class="mainbody">
         <div class="close slider ">
             <div class="profile">
-            <?php
-                    if (isset($_POST["imagesubmit"])) {
-                        $filename = $_FILES['uploadfile']['name'];
-                        $tempname = $_FILES['uploadfile']['tmp_name'];
-                        $folder = "images/" . $filename;
-                        // echo $folder;
-                        move_uploaded_file($tempname, $folder);
+                <?php
+                if (isset($_POST["imagesubmit"])) {
+                    $filename = $_FILES['uploadfile']['name'];
+                    $tempname = $_FILES['uploadfile']['tmp_name'];
+                    $folder = "images/" . $filename;
+                    // echo $folder;
+                    move_uploaded_file($tempname, $folder);
+                    $sql = "INSERT INTO image_details(user_image) VALUES(<img src = '$folder'  class='image'>)";
+                    $results = mysqli_query($conn, $sql);
 
-                        $sql = "INSERT INTO image_details(user_image) VALUES(<img src = '$folder'  class='image'>)";
-                        $results = mysqli_query($conn , $sql);
-                        
-                    }
-                    ?>
+                }
+                ?>
+                <?php
+                $image = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM image_details"))['user_image'];
+                echo "<img src = '$image'  class='image'>";
+                ?>
                 <div class="profileText">
                     <p class="text maintext">John Doe</p>
                 </div>
@@ -75,19 +78,20 @@ require("connect.php");
                         <p class="text">Teachers</p>
                     </div>
                 </a>
-                <a href="school.php" class="anchor5 anchortag">
+                <!-- <a href="school.php" class="anchor5 anchortag">
                     <div class="coins childs">
                         <i class="fa-sharp fa-solid fa-school icons"></i>
                         <p class="text">School</p>
                     </div>
-                </a>
+                </a> -->
                 <hr>
 
                 <a href="logout.php">
-                <div class="logout childs">
-                    <i class="fa-solid fa-right-from-bracket icons"></i>
-                    <p class="text">Log Out</p>
-                </div></a>
+                    <div class="logout childs">
+                        <i class="fa-solid fa-right-from-bracket icons"></i>
+                        <p class="text">Log Out</p>
+                    </div>
+                </a>
                 <!-- <div class="toggle">
                     <input type="checkbox" class="checkbox">
                     <p class="text" id="toggleText">Dark Mode</p>
@@ -101,23 +105,23 @@ require("connect.php");
                 <p class="textC">Student Management System</p>
             </div>
             <div class="main">
-                <a href="admin.php"><div class="admin_profile maincontents">
-                    Admin Profile
-                </div></a>
+                <a href="admin.php">
+                    <div class="admin_profile maincontents">
+                        Admin Profile
+                    </div>
+                </a>
                 <a href="teachers.php">
-                <div class="teachers maincontents">
-                    Teachers<br>
-                    <?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM teacher_details"));?>
-                </div></a>
+                    <div class="teachers maincontents">
+                        Teachers<br>
+                        <?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM teacher_details")); ?>
+                    </div>
+                </a>
                 <a href="students.php">
-                <div class="students maincontents">
-                    Students<br>
-                    <?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM student_details"));?>
-                </div></a>
-                <a href="school.php">
-                <div class="school maincontents">
-                    School
-                </div></a>
+                    <div class="students maincontents">
+                        Students<br>
+                        <?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM student_details")); ?>
+                    </div>
+                </a>
             </div>
         </div>
 

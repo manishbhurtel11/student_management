@@ -25,7 +25,15 @@ require("connect.php");
     <div class="mainbody">
         <div class="close slider ">
             <div class="profile">
-                <img src="images/profile.jpeg" alt="profileImage" class="image">
+                <?php
+            $imageArr = mysqli_query($conn, "SELECT * FROM image_details");
+            if (mysqli_num_rows($imageArr) > 0) {
+                $image = mysqli_fetch_assoc($imageArr)['user_image'];
+                if ($image) {
+                    echo "<img src = '$image'  class='image'>";
+                }
+            }
+            ?>
                 <div class="profileText">
                     <p class="text maintext">John Doe</p>
                 </div>
@@ -62,18 +70,19 @@ require("connect.php");
                         <p class="text">Teachers</p>
                     </div>
                 </a>
-                <a href="school.php" class="anchor5 anchortag">
+                <!-- <a href="school.php" class="anchor5 anchortag">
                     <div class="coins childs">
                         <i class="fa-sharp fa-solid fa-school icons"></i>
                         <p class="text">School</p>
                     </div>
-                </a>
+                </a> -->
                 <hr>
                 <a href="login.php">
-                <div class="logout childs">
-                    <i class="fa-solid fa-right-from-bracket icons"></i>
-                    <p class="text">Log Out</p>
-                </div></a>
+                    <div class="logout childs">
+                        <i class="fa-solid fa-right-from-bracket icons"></i>
+                        <p class="text">Log Out</p>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -95,8 +104,6 @@ require("connect.php");
                         <th>Class</th>
                         <th></th>
                         <th></th>
-                        
-                        
                     </tr>
                     <?php
                     $sql = "SELECT * FROM teacher_details ORDER BY name ASC";
@@ -107,19 +114,20 @@ require("connect.php");
                         while ($row = mysqli_fetch_assoc($res)) {
                     ?>
                     <tr>
-                        <td><?php echo $row['idtext']?></td>
-                        <td><?php echo $row['name']?></td>
-                        <td><?php echo $row['email']?></td>
-                        <td><?php echo $row['number']?></td>
-                        <td><?php echo $row['address']?></td>
-                        <td><?php echo $row['class']?></td>
-                        <td class="alteration"><a href="editteachers.php"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                        <td class="alteration"><?php echo "<a href='functions/deleteteachers.php?id=".$row['id']."'>"; ?><i class="fa-solid fa-trash"></i></a></td>
+                        <td><?php echo $row['idtext'] ?></td>
+                        <td><?php echo $row['name'] ?></td>
+                        <td><?php echo $row['email'] ?></td>
+                        <td><?php echo $row['number'] ?></td>
+                        <td><?php echo $row['address'] ?></td>
+                        <td><?php echo $row['class'] ?></td>
+                        <td class="alteration"><a href="<?php echo './editteachers.php?id=' . $row['id'] ?>"><i
+                                    class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td class="alteration"><?php echo "<a href='functions/deleteteachers.php?id=" . $row['id'] . "'>"; ?><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
                     <?php
                         }
                     }
-                        ?>
+                    ?>
                 </table>
             </div>
         </div>
