@@ -48,10 +48,10 @@ require("connect.php");
                 <i class="fa-solid fa-arrow-right-long"></i>
             </div>
             <div class="links">
-                <div class="search">
+                <!-- <div class="search">
                     <i class="fa-solid fa-magnifying-glass icons"></i><input type="search" placeholder="Search"
                         class="searchbtn">
-                </div>
+                </div> -->
 
 
                 <a href="dashboard.php" class="anchor1 anchortag">
@@ -64,6 +64,12 @@ require("connect.php");
                     <div class="notifications childs">
                         <i class="fa-solid fa-user-tie icons"></i>
                         <p class="text">Admin</p>
+                    </div>
+                </a>
+                <a href="class.php" class="anchor2 anchortag">
+                    <div class="notifications childs">
+                    <i class="fa-solid fa-school icons"></i>
+                        <p class="text">Class</p>
                     </div>
                 </a>
                 <a href="students.php" class="anchor3 anchortag">

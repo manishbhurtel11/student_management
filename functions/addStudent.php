@@ -21,7 +21,7 @@ if($_POST){
         exit;
     }
 
-    $sql = "INSERT INTO student_details (id, idtext, name, email, number, address, class, roll) VALUES (NULL, '$id', '$name', '$email', '$number', '$address', '$class', '$roll')";
+    $sql = "INSERT INTO student_details (id, idtext, name, email, number, address, class_id, roll) VALUES (NULL, '$id', '$name', '$email', '$number', '$address', '$class', '$roll')";
     $res = mysqli_query($conn, $sql);
     if($res){
         echo "<script>alert('Details Added Successfully');</script>";

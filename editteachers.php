@@ -47,6 +47,12 @@ require("connect.php");
                         <p class="text">Admin</p>
                     </div>
                 </a>
+                <a href="class.php" class="anchor2 anchortag">
+                <div class="notifications childs">
+                    <i class="fa-solid fa-school icons"></i>
+                        <p class="text">Class</p>
+                    </div>
+                </a>
                 <a href="students.php" class="anchor3 anchortag">
                     <div class="messages childs">
                         <i class="fa-solid fa-users icons"></i>
@@ -57,12 +63,6 @@ require("connect.php");
                     <div class="heart childs">
                         <i class="fa-sharp fa-solid fa-users icons"></i>
                         <p class="text">Teachers</p>
-                    </div>
-                </a>
-                <a href="school.php" class="anchor5 anchortag">
-                    <div class="coins childs">
-                        <i class="fa-sharp fa-solid fa-school icons"></i>
-                        <p class="text">School</p>
                     </div>
                 </a>
                 <hr>

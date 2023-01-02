@@ -47,6 +47,12 @@ require("connect.php");
                         <p class="text">Admin</p>
                     </div>
                 </a>
+                <a href="class.php" class="anchor2 anchortag">
+                <div class="notifications childs">
+                    <i class="fa-solid fa-school icons"></i>
+                        <p class="text">Class</p>
+                    </div>
+                </a>
                 <a href="students.php" class="anchor3 anchortag">
                     <div class="messages childs">
                         <i class="fa-solid fa-users icons"></i>
@@ -57,12 +63,6 @@ require("connect.php");
                     <div class="heart childs">
                         <i class="fa-sharp fa-solid fa-users icons"></i>
                         <p class="text">Teachers</p>
-                    </div>
-                </a>
-                <a href="school.php" class="anchor5 anchortag">
-                    <div class="coins childs">
-                        <i class="fa-sharp fa-solid fa-school icons"></i>
-                        <p class="text">School</p>
                     </div>
                 </a>
                 <hr>
@@ -105,8 +105,16 @@ require("connect.php");
                         <input type="text" name="address" class="address" value="<?php echo $res['address']; ?>">
                     </div>
                     <div class="class_section">
-                        <label for="class" class="labels">Class</label>
-                        <input type="text" name="class" class="class" value="<?php echo $res['class']; ?>">
+                    <select name="class">
+                            <option value="">Class</option>
+                            <?php
+                            require("connect.php");
+                        $classes = mysqli_query($conn, "SELECT * FROM class");
+                        while($row = mysqli_fetch_assoc($classes)){
+                                echo "<option value='".$row['class_id']."'>".$row['class_name']."</option>"; 
+                        }
+                        ?>
+                        </select>
                     </div>
                     <div class="roll_section">
                         <label for="roll" class="labels">Roll No</label>
@@ -127,7 +135,7 @@ require("connect.php");
                     $class = $_POST['class'];
                     $roll = $_POST['roll'];
                     $id = $_POST['id'];
-                    $submit = mysqli_query($conn, "UPDATE student_details SET name='$name', email = '$email', number= '$number', address = '$address', class='$class', roll='$roll' WHERE id='$id'");
+                    $submit = mysqli_query($conn, "UPDATE student_details SET name='$name', email = '$email', number= '$number', address = '$address', class_id='$class', roll='$roll' WHERE id='$id'");
                     header("location: ./students.php");
                     }
                 ?>

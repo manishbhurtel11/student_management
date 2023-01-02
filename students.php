@@ -42,10 +42,10 @@ require("connect.php");
                 <i class="fa-solid fa-arrow-right-long"></i>
             </div>
             <div class="links">
-                <div class="search">
-                    <i class="fa-solid fa-magnifying-glass icons"></i><input type="search" placeholder="Search"
-                        class="searchbtn">
-                </div>
+                    <form action="" method="post" class="search">
+                        <i class="fa-solid fa-magnifying-glass icons"></i><input type="search" placeholder="Search"
+                        class="searchbtn" name="search">
+                    </form>
                 <a href="dashboard.php" class="anchor1 anchortag">
                     <div class="dashboard childs">
                         <i class="fa-solid fa-house icons"></i>
@@ -56,6 +56,12 @@ require("connect.php");
                     <div class="notifications childs">
                         <i class="fa-solid fa-user-tie icons"></i>
                         <p class="text">Admin</p>
+                    </div>
+                </a>
+                <a href="class.php" class="anchor2 anchortag">
+                <div class="notifications childs">
+                    <i class="fa-solid fa-school icons"></i>
+                        <p class="text">Class</p>
                     </div>
                 </a>
                 <a href="students.php" class="anchor3 anchortag">
@@ -107,7 +113,12 @@ require("connect.php");
                         <th></th>
                     </tr>
                     <?php
-                    $sql = "SELECT * FROM student_details ORDER BY name ASC";
+                    if($_POST){
+                        $search = $_POST['search'];
+                        $sql = "SELECT * FROM student_details JOIN class ON student_details.class_id = class.class_id WHERE name LIKE '%$search%' OR class_name LIKE '%$search%'";
+                    }else{
+                        $sql = "SELECT * FROM student_details JOIN class ON student_details.class_id = class.class_id ORDER BY name ASC";
+                    }
                     $res = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($res) == 0) {
                         echo "<p>No records found.</p>";
@@ -120,7 +131,7 @@ require("connect.php");
                         <td><?php echo $row['email']?></td>
                         <td><?php echo $row['number']?></td>
                         <td><?php echo $row['address']?></td>
-                        <td><?php echo $row['class']?></td>
+                        <td><?php echo $row['class_name']?></td>
                         <td><?php echo $row['roll']?></td>
                         <td class="alteration"><a href="<?php echo './edit.php?id='.$row['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
                         <td class="alteration"><?php echo "<a href='functions/delete.php?id=".$row['id']."'>"; ?><i class="fa-solid fa-trash"></i></a></td>

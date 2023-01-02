@@ -97,8 +97,16 @@
                         <input type="text" name="address" class="address">
                     </div>
                     <div class="class_section">
-                        <label for="class" class="labels">Class</label>
-                        <input type="text" name="class" class="class">
+                        <select name="class">
+                            <option value="">Class</option>
+                            <?php
+                            require("connect.php");
+                        $classes = mysqli_query($conn, "SELECT * FROM class");
+                        while($row = mysqli_fetch_assoc($classes)){
+                                echo "<option value='".$row['class_id']."'>".$row['class_name']."</option>"; 
+                        }
+                        ?>
+                        </select>
                     </div>
                     <div class="roll_section">
                         <label for="roll" class="labels">Roll No</label>

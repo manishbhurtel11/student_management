@@ -26,14 +26,14 @@ require("connect.php");
         <div class="close slider ">
             <div class="profile">
                 <?php
-            $imageArr = mysqli_query($conn, "SELECT * FROM image_details");
-            if (mysqli_num_rows($imageArr) > 0) {
-                $image = mysqli_fetch_assoc($imageArr)['user_image'];
-                if ($image) {
-                    echo "<img src = '$image'  class='image'>";
+                $imageArr = mysqli_query($conn, "SELECT * FROM image_details");
+                if (mysqli_num_rows($imageArr) > 0) {
+                    $image = mysqli_fetch_assoc($imageArr)['user_image'];
+                    if ($image) {
+                        echo "<img src = '$image'  class='image'>";
+                    }
                 }
-            }
-            ?>
+                ?>
                 <div class="profileText">
                     <p class="text maintext">John Doe</p>
                 </div>
@@ -42,10 +42,10 @@ require("connect.php");
                 <i class="fa-solid fa-arrow-right-long"></i>
             </div>
             <div class="links">
-                <div class="search">
+                <form action="" class="search" method="POST">
                     <i class="fa-solid fa-magnifying-glass icons"></i><input type="search" placeholder="Search"
-                        class="searchbtn">
-                </div>
+                        class="searchbtn" name="search">
+                </form>
                 <a href="dashboard.php" class="anchor1 anchortag">
                     <div class="dashboard childs">
                         <i class="fa-solid fa-house icons"></i>
@@ -56,6 +56,12 @@ require("connect.php");
                     <div class="notifications childs">
                         <i class="fa-solid fa-user-tie icons"></i>
                         <p class="text">Admin</p>
+                    </div>
+                </a>
+                <a href="class.php" class="anchor2 anchortag">
+                <div class="notifications childs">
+                    <i class="fa-solid fa-school icons"></i>
+                        <p class="text">Class</p>
                     </div>
                 </a>
                 <a href="students.php" class="anchor3 anchortag">
@@ -106,25 +112,39 @@ require("connect.php");
                         <th></th>
                     </tr>
                     <?php
-                    $sql = "SELECT * FROM teacher_details ORDER BY name ASC";
+                    if ($_POST) {
+                        $search = $_POST['search'];
+                        $sql = "SELECT * FROM teacher_details WHERE name LIKE '%$search%'";
+                    } else {
+                        $sql = "SELECT * FROM teacher_details ORDER BY name ASC";
+                    }
                     $res = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($res) == 0) {
                         echo "<p>No records found.</p>";
                     } else {
                         while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                    <tr>
-                        <td><?php echo $row['idtext'] ?></td>
-                        <td><?php echo $row['name'] ?></td>
-                        <td><?php echo $row['email'] ?></td>
-                        <td><?php echo $row['number'] ?></td>
-                        <td><?php echo $row['address'] ?></td>
-                        <td><?php echo $row['class'] ?></td>
-                        <td class="alteration"><a href="<?php echo './editteachers.php?id=' . $row['id'] ?>"><i
-                                    class="fa-solid fa-pen-to-square"></i></a></td>
-                        <td class="alteration"><?php echo "<a href='functions/deleteteachers.php?id=" . $row['id'] . "'>"; ?><i class="fa-solid fa-trash"></i></a></td>
-                    </tr>
-                    <?php
+                            ?>
+                            <tr>
+                                <td><?php echo $row['idtext'] ?></td>
+                                <td>
+                                    <?php echo $row['name'] ?>
+                                </td>
+                                <td><?php echo $row['email'] ?></td>
+                                <td>
+                                    <?php echo $row['number'] ?>
+                                </td>
+                                <td><?php echo $row['address'] ?></td>
+                                <td>
+                                    <?php echo $row['class'] ?>
+                                </td>
+                                <td class="alteration"><a href="<?php echo './editteachers.php?id=' . $row['id'] ?>"><i
+                                            class="fa-solid fa-pen-to-square"></i></a></td>
+                                <td class="alteration">
+                                    <?php echo "<a href='functions/deleteteachers.php?id=" . $row['id'] . "'>"; ?><i
+                                        class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <?php
                         }
                     }
                     ?>
