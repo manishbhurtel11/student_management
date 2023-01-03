@@ -47,6 +47,12 @@ require("connect.php");
                         <p class="text">Admin</p>
                     </div>
                 </a>
+                <a href="class.php" class="anchor2 anchortag">
+                    <div class="notifications childs">
+                        <i class="fa-solid fa-school icons"></i>
+                        <p class="text">Class</p>
+                    </div>
+                </a>
                 <a href="students.php" class="anchor3 anchortag">
                     <div class="messages childs">
                         <i class="fa-solid fa-users icons"></i>

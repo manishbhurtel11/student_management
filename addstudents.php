@@ -43,6 +43,12 @@
                         <p class="text">Admin</p>
                     </div>
                 </a>
+                <a href="class.php" class="anchor2 anchortag">
+                    <div class="notifications childs">
+                        <i class="fa-solid fa-school icons"></i>
+                        <p class="text">Class</p>
+                    </div>
+                </a>
                 <a href="students.php" class="anchor3 anchortag">
                     <div class="messages childs">
                         <i class="fa-solid fa-users icons"></i>
@@ -53,12 +59,6 @@
                     <div class="heart childs">
                         <i class="fa-sharp fa-solid fa-users icons"></i>
                         <p class="text">Teachers</p>
-                    </div>
-                </a>
-                <a href="school.php" class="anchor5 anchortag">
-                    <div class="coins childs">
-                        <i class="fa-sharp fa-solid fa-school icons"></i>
-                        <p class="text">School</p>
                     </div>
                 </a>
                 <hr>
@@ -74,7 +74,7 @@
                 <p class="textC">Students</p>
             </div>
             <div class="main main2">
-                <form action="./functions/addStudent.php" class="detailsform" method = "POST">
+                <form action="./functions/addStudent.php" class="detailsform" method="POST">
                     <p class="dheader">Add Student</p>
                     <div class="id_section">
                         <label for="name" class="labels">Id</label>
@@ -97,15 +97,15 @@
                         <input type="text" name="address" class="address">
                     </div>
                     <div class="class_section">
-                        <select name="class">
+                        <select name="class"  class="class">
                             <option value="">Class</option>
                             <?php
                             require("connect.php");
-                        $classes = mysqli_query($conn, "SELECT * FROM class");
-                        while($row = mysqli_fetch_assoc($classes)){
-                                echo "<option value='".$row['class_id']."'>".$row['class_name']."</option>"; 
-                        }
-                        ?>
+                            $classes = mysqli_query($conn, "SELECT * FROM class");
+                            while ($row = mysqli_fetch_assoc($classes)) {
+                                echo "<option value='" . $row['class_id'] . "'>" . $row['class_name'] . "</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="roll_section">

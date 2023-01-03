@@ -25,15 +25,15 @@ require("connect.php");
     <div class="mainbody">
         <div class="close slider ">
             <div class="profile">
-            <?php
+                <?php
                 $imageArr = mysqli_query($conn, "SELECT * FROM image_details");
-                if(mysqli_num_rows($imageArr) > 0){
+                if (mysqli_num_rows($imageArr) > 0) {
                     $image = mysqli_fetch_assoc($imageArr)['user_image'];
-                    if($image){
+                    if ($image) {
                         echo "<img src = '$image'  class='image'>";
                     }
                 }
-                    ?>
+                ?>
                 <div class="profileText">
                     <p class="text maintext">John Doe</p>
                 </div>
@@ -42,10 +42,6 @@ require("connect.php");
                 <i class="fa-solid fa-arrow-right-long"></i>
             </div>
             <div class="links">
-                    <form action="" method="post" class="search">
-                        <i class="fa-solid fa-magnifying-glass icons"></i><input type="search" placeholder="Search"
-                        class="searchbtn" name="search">
-                    </form>
                 <a href="dashboard.php" class="anchor1 anchortag">
                     <div class="dashboard childs">
                         <i class="fa-solid fa-house icons"></i>
@@ -59,8 +55,8 @@ require("connect.php");
                     </div>
                 </a>
                 <a href="class.php" class="anchor2 anchortag">
-                <div class="notifications childs">
-                    <i class="fa-solid fa-school icons"></i>
+                    <div class="notifications childs">
+                        <i class="fa-solid fa-school icons"></i>
                         <p class="text">Class</p>
                     </div>
                 </a>
@@ -76,12 +72,6 @@ require("connect.php");
                         <p class="text">Teachers</p>
                     </div>
                 </a>
-                <!-- <a href="school.php" class="anchor5 anchortag">
-                    <div class="coins childs">
-                        <i class="fa-sharp fa-solid fa-school icons"></i>
-                        <p class="text">School</p>
-                    </div>
-                </a> -->
                 <hr>
                 <a href="login.php">
                     <div class="logout childs">
@@ -107,10 +97,10 @@ require("connect.php");
                         <th></th>
                     </tr>
                     <?php
-                    if($_POST){
+                    if ($_POST) {
                         $search = $_POST['search'];
                         $sql = "SELECT * FROM class WHERE class_name LIKE '%$search%'";
-                    }else{
+                    } else {
                         $sql = "SELECT * FROM class ORDER BY class_name ASC";
                     }
                     $res = mysqli_query($conn, $sql);
@@ -118,16 +108,21 @@ require("connect.php");
                         echo "<p>No records found.</p>";
                     } else {
                         while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                    <tr>
-                        <td><?php echo $row['class_id']?></td>
-                        <td><?php echo $row['class_name']?></td>
-                        <td class="alteration"><?php echo "<a href='functions/deleteclass.php?id=".$row['class_id']."'>"; ?><i class="fa-solid fa-trash"></i></a></td>
-                    </tr>
-                    <?php
+                            ?>
+                            <tr>
+                                <td><?php echo $row['class_id'] ?></td>
+                                <td>
+                                    <?php echo $row['class_name'] ?>
+                                </td>
+                                <td class="alteration">
+                                    <?php echo "<a href='functions/deleteclass.php?id=" . $row['class_id'] . "'>"; ?><i
+                                        class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <?php
                         }
                     }
-                        ?>
+                    ?>
                 </table>
             </div>
         </div>
