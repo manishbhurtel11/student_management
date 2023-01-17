@@ -15,7 +15,7 @@ if($_POST){
 
     $existingStudent = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM teacher_details WHERE `email` = '$email'"));
     if($existingStudent != 0){
-        echo "<script>alert('Student already exist');</script>";
+        echo "<script>alert('Teacher already exist');</script>";
         echo "<script>location.href = '../teachers.php'</script>";
         exit;
     }
